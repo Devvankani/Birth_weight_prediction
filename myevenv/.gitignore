@@ -1,0 +1,6 @@
+model_pred.ipynb
+myevenv/
+dataset/
+.ipynb_checkpoints/
+__pycache__/
+*.ipynb
