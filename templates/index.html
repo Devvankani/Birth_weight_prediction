@@ -270,19 +270,23 @@
         };
 
         try {
-          const response = await fetch("/pred", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
+  const response = await fetch("/pred", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-          const result = await response.json();
+  const result = await response.json();
 
-          document.getElementById("resultBox").style.display = "block";
+  if (!response.ok) {
+    throw new Error(result.error || "Server Error");
+  }
 
-          document.getElementById("resultText").innerHTML = `
+  document.getElementById("resultBox").style.display = "block";
+
+  document.getElementById("resultText").innerHTML = `
 
 <div style="
 display:flex;
@@ -334,11 +338,15 @@ ${result.response} ounces
 
 </div>
 `;
-        } catch (error) {
-          alert("Error connecting to API");
-          console.log(error);
-        }
-      });
-    </script>
-  </body>
-</html>
+
+} catch (error) {
+
+  console.log(error);
+
+  document.getElementById("resultBox").style.display = "block";
+
+  document.getElementById("resultText").innerHTML = `
+    <h2 style="color:red;">API Error</h2>
+    <p>${error.message}</p>
+  `;
+}
