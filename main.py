@@ -33,7 +33,7 @@ def pred_model():
     clean_data = clean(data)
     test_data = pd.DataFrame(clean_data)
     
-    with open("model/model.pkl","rb") as f:
+    with open("model.pkl","rb") as f:
         model = pickle.load(f)
         
     pred = model.predict(test_data)
